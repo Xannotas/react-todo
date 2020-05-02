@@ -1,0 +1,89 @@
+.sidebar {
+  padding: 20px;
+  background: #E5E5E5;
+  max-width: 200px;
+  width: 100%;
+  border-right: 1px solid #F1F1F1;
+
+  &-content {
+
+    &__item {
+      word-wrap: break-word;
+      cursor: pointer;
+      padding: 10px;
+
+      &.active {
+        background: #fff;
+        border-radius: 5px;
+      }
+      &:hover {
+        background: #eee;
+      }
+    }
+  }
+
+  &__create-folder {
+    position: relative;
+    
+    &-btn {
+      color: $text-gray;
+      i {
+        font-size: 1.2rem;
+        margin-right: 5px;
+        vertical-align: sub;
+      }
+    }
+
+    &-form {
+      position: absolute;
+      width: 200px;
+      padding: 15px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px 3px #ddd;
+      margin-bottom: 3rem;
+
+      input {
+        width: 100%;
+        padding: 5px 10px;
+        border: 2px solid #EFEFEF;
+        border-radius: 5px;
+      }
+      .btn-submit {
+        background: $accent-color;
+        width: 100%;
+        padding: 10px 0;
+        border-radius: 5px;
+        color: #fff;
+        font-weight: 700;
+        margin-top: 10px;
+      }
+      .btn-close {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        top: -8px;
+        right: -8px;
+        color: #fff;
+        background: #5C5C5C;
+        border-radius: 50%;
+        font-size: 20px;
+        line-height: 1rem;
+      }
+    }
+  }
+}
+.content {
+  padding: 50px;
+  width: 100%;	
+  background: #fff;
+
+  &__empty {
+    width: 100%;
+    color: $text-light;
+    font-size: 2rem;
+    font-weight: 700;
+    align-self: center;
+    text-align: center;
+  }
+}

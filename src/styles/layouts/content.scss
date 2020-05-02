@@ -1,0 +1,25 @@
+.content {
+
+  &-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  hr {
+    border-color: #F2F2F2;
+  }
+
+  &-add-btn {
+    color: $text-light;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding: 3px 6px;
+
+    i {
+      margin-right: 10px;
+      font-size: 1.5rem;
+      vertical-align: bottom;
+    }
+  }
+}
