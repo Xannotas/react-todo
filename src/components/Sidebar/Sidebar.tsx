@@ -6,10 +6,11 @@ import TodoFolder from '../TodoFolder';
 
 interface ISidebarProps {
   addNewFolder: any,
-  folders: ITodoFolder[]
+  folders: ITodoFolder[],
+  folderId: number
 }
 
-export default function Sidebar({addNewFolder, folders} : ISidebarProps) {
+export default function Sidebar({addNewFolder, folders, folderId} : ISidebarProps) {
   const [formDisplay, toggleFormDisplay] = useState<boolean>(false)
 
   const handleFolderShow = () => {
@@ -23,7 +24,7 @@ export default function Sidebar({addNewFolder, folders} : ISidebarProps) {
   return (
     <aside className="sidebar">
       <div className="sidebar-content">
-        {folders.map(folder => <TodoFolder key={folder.id} title={folder.title} todos={folder.todos} id={folder.id}/>)}
+        {folders.map(folder => <TodoFolder key={folder.id} {...folder}/>)}
       </div>
       
       <div className="sidebar__create-folder mt1">

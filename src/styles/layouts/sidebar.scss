@@ -12,6 +12,14 @@
       cursor: pointer;
       padding: 10px;
 
+      i {
+        display: inline-block;
+        margin-right: 10px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
       &.active {
         background: #fff;
         border-radius: 5px;

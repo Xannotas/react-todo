@@ -27,14 +27,10 @@ function App() {
   
   return (
     <div className='app'>
-      <Sidebar folders={folders} addNewFolder={addNewFolder}/>
+      <Sidebar folders={folders} addNewFolder={addNewFolder} folderId={folderId}/>
       
       { folders.length
-        ? <Content 
-            title={folders[folderId].title}
-            todos={folders[folderId].todos}
-            color={folders[folderId].color}
-          />
+        ? <Content folders={folders} folderId={folderId}/>
         : <p className='content__empty'>Задачи отсутствуют</p>
       }
     </div>
