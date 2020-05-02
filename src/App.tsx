@@ -25,7 +25,6 @@ function App() {
   }
 
   const addNewTodo = (text: string) => {
-    
     setFolders(prev => {
       let newTodo : Todo = {
         id: prev[folderId].todos.length,
@@ -41,7 +40,7 @@ function App() {
   
   return (
     <div className='app'>
-      <Sidebar folders={folders} addNewFolder={addNewFolder} folderId={folderId}/>
+      <Sidebar folders={folders} addNewFolder={addNewFolder} folderId={folderId} setFolderId={setFolderId}/>
       
       { folders.length
         ? <Content folders={folders} folderId={folderId} onAddNewTodo={addNewTodo}/>

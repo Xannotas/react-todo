@@ -23,6 +23,10 @@
       &.active {
         background: #fff;
         border-radius: 5px;
+        cursor: auto;
+        &:hover {
+          background: #fff;
+        }
       }
       &:hover {
         background: #eee;
