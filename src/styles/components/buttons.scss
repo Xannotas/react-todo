@@ -1,0 +1,38 @@
+.btn {
+  border: none;
+  border-radius: 0;
+  background: none;
+  padding: 3px;
+  cursor: pointer;
+
+  &-submit {
+    background: $accent-color;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #fff;
+    font-weight: 700;
+    margin-top: 10px;
+    &:hover {
+      background: darken($accent-color, 10);
+    }
+    &:active {
+      background: darken($accent-color, 20);
+    }
+  }
+
+  &-cancel {
+    background: #F4F6F8;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #9C9C9C;
+    font-weight: 700;
+    margin-top: 10px;
+
+    &:hover {
+      background: darken(#F4F6F8, 10);
+    }
+    &:active {
+      background: darken(#F4F6F8, 20);
+    }
+  }
+}

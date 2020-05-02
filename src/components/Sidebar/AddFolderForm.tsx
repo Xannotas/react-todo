@@ -14,22 +14,28 @@ export default function AddFolderForm({closeFolderForm, addNewFolder} : IAddFold
   }
 
   const handleSubmit = () => {
-    addNewFolder(inputValue, color)
-    setInputValue('')
+    addFolder()
   }
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if(event.key === 'enter'){
-      addNewFolder(inputValue, color)
-      setInputValue('')
+    if(event.key === 'Enter'){
+      addFolder()
     }
+  }
+
+  const addFolder = () =>{
+    addNewFolder(inputValue, color)
+    setInputValue('')
+    closeFolderForm()
   }
 
   return (
     <div className='sidebar__create-folder-form'>
       <button className='btn btn-close' onClick={closeFolderForm}>&times;</button>
-      <input value={inputValue} onChange={handleInput} onKeyDown={handleKeyDown} placeholder='Название папки'/>
+      <input className='input' value={inputValue} autoFocus placeholder='Название папки'
+          onChange={handleInput} onKeyDown={handleKeyDown}
+      />
       {/* COLORS */}
-      <button className='btn btn-submit' onClick={handleSubmit}>Добавить</button>
+      <button className='btn btn-submit w100' onClick={handleSubmit}>Добавить</button>
     </div>
   )
 }

@@ -1,4 +1,13 @@
 .content {
+  &-todo-form {
+    input {
+      padding: 10px;
+      margin-bottom: 8px;
+    }
+    .btn-submit {
+      margin-right: 1rem;
+    }
+  }
 
   &-folder {
     &__title {
@@ -9,6 +18,10 @@
       border-bottom: 1px solid #f2f2f2;
       margin-bottom: 30px;
       background-color: transparent;
+    }
+
+    &__todos {
+      margin-bottom: 1rem;
     }
 
     &__add-btn {
