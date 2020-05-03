@@ -2,13 +2,50 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  &__checkbox {
-    width: 100%;
+  
+  &-content {
+    display: flex;
+    align-items: center;
     cursor: pointer;
-  }
+    width: 100%;
+    padding: 5px 0;
 
-  &__text {
-    padding-left: 10px;
+    .checkbox {
+      display: inline-block;
+      text-align: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid #E8E8E8;
+      margin-right: 10px;
+
+      svg {
+        margin: 2px 3px;
+      }
+    }
+
+    input[type='checkbox'] {
+      display: none;
+
+      &:hover+.checkbox {пше
+        svg path{
+          stroke: #B2B2B2;
+        }
+      }
+      &:checked+.checkbox {
+        background: $accent-color;
+        border: 2px solid $accent-color;
+        svg path{
+          stroke: #fff;
+        }
+      }
+    }
+
+    &:hover {
+      .checkbox {
+        background: #E8E8E8;
+      }
+    }
   }
 
   &__remove {
