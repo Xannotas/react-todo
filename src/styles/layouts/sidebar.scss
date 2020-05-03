@@ -4,13 +4,16 @@
   max-width: 200px;
   width: 100%;
   border-right: 1px solid #F1F1F1;
+  font-size: 0.9rem;
 
   &-content {
 
     &__item {
-      word-wrap: break-word;
       cursor: pointer;
       padding: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       i {
         display: inline-block;

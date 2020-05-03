@@ -9,12 +9,11 @@ interface ITodoFolderProps {
   setFolderId: any
 }
 
-
-
 export default function TodoFolder({title, color, id, folderId, setFolderId} : ITodoFolderProps) {
   const handleFolderClick = (event : React.MouseEvent) => {
     setFolderId(id)
   }
+  
   return (
     <div className={classNames('sidebar-content__item', {'active' : folderId === id})}
       onClick={handleFolderClick}>
