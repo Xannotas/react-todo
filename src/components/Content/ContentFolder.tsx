@@ -1,6 +1,9 @@
 import React from 'react'
 import classNames from 'classnames'
+
 import {Todo} from '../../types'
+
+import TodoItem from './TodoItem'
 
 interface IContentFolderProps {
   title: string,
@@ -14,9 +17,7 @@ export default function ContentFolder({title, todos, color} : IContentFolderProp
       <h3 className={classNames('content-folder__title', `color-${color}`)}>{title}</h3>
 
       {todos.length > 0 && <div className="content-folder__todos">
-        <ul>
-          {todos.map(todo => <li>{todo.text}</li>)}
-        </ul>
+        {todos.map(todo => <TodoItem key={todo.id} todo={todo}/>)}
       </div>}
     </div>
   )

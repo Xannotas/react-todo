@@ -1,0 +1,24 @@
+.todo-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &__checkbox {
+    width: 100%;
+    cursor: pointer;
+  }
+
+  &__text {
+    padding-left: 10px;
+  }
+
+  &__remove {
+    color: $text-light;
+    font-size: 1.5rem;
+    padding: 5px;
+    cursor: pointer;
+
+    &:hover {
+      color: #8a0000;
+    }
+  }
+}
