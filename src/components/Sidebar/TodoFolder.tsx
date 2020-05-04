@@ -6,9 +6,9 @@ type Props = {
   title: string,
   color: string,
   isShowAllFolders: boolean,
-  currentFolderId: number,
-  setFolderId: (id: number) => void,
-  deleteFolder: (id: number) => void
+  currentFolderId: number | null,
+  setFolderId: (folderId: number) => void,
+  deleteFolder: (folderId: number) => void
 }
 
 const TodoFolder: React.FC<Props> = ({ title, color, id, currentFolderId, setFolderId, deleteFolder, isShowAllFolders }) => {
@@ -26,7 +26,7 @@ const TodoFolder: React.FC<Props> = ({ title, color, id, currentFolderId, setFol
         <i className={classNames('sidebar-content__item-color', `color-${color}`)}></i>
         <span className='sidebar-content__item-title'>{title}</span>
       </div>
-      <button className='btn btn-remove d-none' onClick={handlerFolderRemove}>&times;</button>
+      <button className='btn btn-remove d-none' onClick={handlerFolderRemove}>&times;</button> 
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { createStore } from 'redux'
 import { Folder, Todo } from './../types';
+import { stat } from 'fs';
 
 const FOLDER_ADD = 'FOLDER:ADD'
 const SET_FOLDER_ID = 'FOLDER:SET-ID'
@@ -13,7 +14,7 @@ const SHOW_ALL_FOLDERS = 'SHOW-ALL-FOLDERS:ON'
 
 const initialState = {
   folders: [] as Folder[],
-  currentFolderId: 0 as number,
+  currentFolderId: null as number | null,
   isShowAllFolders: false as boolean
 }
 
@@ -30,18 +31,20 @@ const rootReducer = (state = initialState, action: RootAction): InitialState => 
       }
       return {
         ...state,
-        folders: [...state.folders, newFolder]
+        folders: [...state.folders, newFolder],
+        currentFolderId: newFolder.id,
+        isShowAllFolders: !state.folders.length && false
       }
     }
 
     case TODO_ADD: {
       let newTodo: Todo = {
-        id: state.folders[state.currentFolderId].todos.length,
+        id: state.folders[action.folderId].todos.length,
         text: action.text,
         complited: false
       }
       const stateCopy = { ...state, folders: [...state.folders] }
-      stateCopy.folders[state.currentFolderId].todos.push(newTodo)
+      stateCopy.folders[action.folderId].todos.push(newTodo)
       return stateCopy
     }
 
@@ -61,23 +64,36 @@ const rootReducer = (state = initialState, action: RootAction): InitialState => 
 
     case TODO_DELETE: {
       const newState = { ...state, folders: [...state.folders] }
-      const todos: Todo[] = state.folders[state.currentFolderId].todos.filter(todo => todo.id !== action.id)
-      newState.folders[state.currentFolderId].todos = todos
+      const todos: Todo[] = state.folders[action.folderId].todos.filter(todo => todo.id !== action.todoId)
+      newState.folders[action.folderId].todos = todos
 
       return newState
     }
 
     case FOLDER_DELETE: {
+      let newId: number | null = null
+      if (state.folders.length < 2) {
+        newId = null
+      } else {
+        if(state.folders[action.folderId - 1]) {
+          newId = state.folders[action.folderId - 1].id
+        } else {
+          newId = state.folders[action.folderId + 1].id
+        }
+      }
       return {
         ...state,
-        folders: state.folders.filter(folder => folder.id !== state.folders[action.id].id),
-        currentFolderId: state.folders[state.currentFolderId - 1].id
+        folders: state.folders.length > 1 ? state.folders.filter(folder => folder.id !== state.folders[action.folderId].id) : [],
+        currentFolderId: newId,
+        isShowAllFolders: newId === null ? true : false
       }
     }
+
     case SHOW_ALL_FOLDERS: {
       return {
         ...state,
-        isShowAllFolders: true
+        isShowAllFolders: true,
+        currentFolderId: null
       }
     }
 
@@ -85,11 +101,14 @@ const rootReducer = (state = initialState, action: RootAction): InitialState => 
       return state;
   }
 }
+
 const store = createStore(
   rootReducer,
   // @ts-ignore
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
+// @ts-ignore
+window._state = store.getState()
 
 export type RootState = ReturnType<typeof rootReducer>
 export default store
@@ -114,10 +133,11 @@ export const setFolderId = (id: number): SetFolderId => {
   }
 }
 
-type AddTodo = { type: typeof TODO_ADD, text: string }
-export const addTodo = (text: string): AddTodo => {
+type AddTodo = { type: typeof TODO_ADD, folderId: number, text: string }
+export const addTodo = (folderId: number, text: string): AddTodo => {
   return {
     type: TODO_ADD,
+    folderId,
     text
   }
 }
@@ -131,19 +151,20 @@ export const compliteTodo = (folderId: number, todoId: number): CompliteTodo => 
   }
 }
 
-type DeleleTodo = { type: typeof TODO_DELETE, id: number }
-export const deleleTodo = (id: number): DeleleTodo => {
+type DeleleTodo = { type: typeof TODO_DELETE, folderId: number, todoId: number }
+export const deleleTodo = (folderId: number, todoId: number): DeleleTodo => {
   return {
     type: TODO_DELETE,
-    id
+    folderId,
+    todoId
   }
 }
 
-type DeleteFolder = { type: typeof FOLDER_DELETE, id: number }
-export const deleteFolder = (id: number): DeleteFolder => {
+type DeleteFolder = { type: typeof FOLDER_DELETE, folderId: number }
+export const deleteFolder = (folderId: number): DeleteFolder => {
   return {
     type: FOLDER_DELETE,
-    id
+    folderId
   }
 }
 

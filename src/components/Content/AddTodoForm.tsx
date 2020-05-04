@@ -1,16 +1,17 @@
-import React, { useState, ChangeEvent } from 'react'
+import React, { useState } from 'react'
 
 type Props = {
+  folderId: number,
   hideTodoForm: () => void,
-  addTodo: (text: string) => void
+  addTodo: (folderId: number, text: string) => void
 }
-const AddTodoForm: React.FC<Props> = ({ hideTodoForm, addTodo }) => {
+const AddTodoForm: React.FC<Props> = ({ hideTodoForm, addTodo, folderId }) => {
 
   const [todoValue, setTodoValue] = useState<string>('')
 
-  const handleAddNewTodo = (event: React.MouseEvent) => {
+  const handleAddNewTodo = () => {
     if (todoValue.length) {
-      addTodo(todoValue)
+      addTodo(folderId, todoValue)
       setTodoValue('')
     }
   }

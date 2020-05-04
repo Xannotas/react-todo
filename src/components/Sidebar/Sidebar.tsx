@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Folder } from '../../types';
+import classNames from 'classnames'
 import listSvg from '../../assets/list.svg';
 
 import AddFolderForm from './AddFolderForm';
@@ -9,12 +10,12 @@ import { RootState, setFolderId, deleteFolder, showAllFolders } from '../../redu
 
 type StateProps = {
   folders: Folder[],
-  currentFolderId: number,
+  currentFolderId: number | null,
   isShowAllFolders: boolean
 }
 type DispatchProps = {
   setFolderId: (id: number) => void,
-  deleteFolder: (id: number) => void,
+  deleteFolder: (folderId: number) => void,
   showAllFolders: () => void
 }
 type OwnProps = {}
@@ -40,7 +41,7 @@ const Sidebar: React.FC<Props> = ({ setFolderId, folders, currentFolderId, delet
     <aside className="sidebar">
       <div className="sidebar-content">
         {folders.length > 1 &&
-          <div className={'sidebar-content__item sidebar-content__item-all-todos'} onClick={hideFormShowAllFolders}>
+          <div className={classNames('sidebar-content__item','sidebar-content__item-all-todos', {'active' : isShowAllFolders})} onClick={hideFormShowAllFolders}>
             <i className={'sidebar-content__item-img'}> <img src={listSvg} alt="list" /> </i>
             <span className='sidebar-content__item-title'>Все задачи</span>
           </div>

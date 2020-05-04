@@ -14,6 +14,7 @@ type OwnProps = {
 type Props = StateProps & DispatchProps & OwnProps
 
 const AddFolderForm: React.FC<Props> = ({ hideFormFolderCreactor, addFolder }) => {
+  const maxTitleLenght: number = 30
   const [inputValue, setInputValue] = useState<string>('')
   const [colorName, setColorName] = useState<string>('default')
 
@@ -31,7 +32,7 @@ const AddFolderForm: React.FC<Props> = ({ hideFormFolderCreactor, addFolder }) =
   }
 
   const _addFolder = () => {
-    if (inputValue.length && inputValue.length < 30) {
+    if (inputValue.length && inputValue.length < maxTitleLenght) {
       addFolder(inputValue, colorName)
       setInputValue('')
       hideFormFolderCreactor()

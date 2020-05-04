@@ -11,16 +11,17 @@ type OwnProps = {
 type StateProps = {}
 type DispathProps = {
   compliteTodo: (folderId: number, todoId: number) => void,
-  deleleTodo: (id: number) => void
+  deleleTodo: (folderId: number, todoId: number) => void
 }
 type Props = OwnProps & DispathProps & StateProps
+
 const TodoItem: React.FC<Props> = ({ folderId, todoId, complited, text, compliteTodo, deleleTodo }) => {
   const handleChangeCompleted = () => {
     compliteTodo(folderId, todoId)
   }
 
   const handleTodoDelete = () => {
-    deleleTodo(todoId)
+    deleleTodo(folderId, todoId)
   }
 
   return (

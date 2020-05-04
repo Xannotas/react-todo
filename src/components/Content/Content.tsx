@@ -9,17 +9,18 @@ import AddTodoForm from './AddTodoForm'
 type OwnProps = {}
 type StateProps = {
   folders: Folder[]
-  currentFolderId: number
+  currentFolderId: number | null
   isShowAllFolders: boolean
 }
 type DispatchProps = {
-  addTodo: (text: string) => void
+  addTodo: (folderId: number, text: string) => void
 }
 type Props = OwnProps & StateProps & DispatchProps
 
 const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId, isShowAllFolders }) => {
   const [todoForm, setTodoForm] = useState<boolean>(false)
-  const currentFolder = currentFolderId >= 0 && folders[currentFolderId]
+  const folderId: number = folders.indexOf(folders.find(folder => folder.id === currentFolderId) as Folder)
+  
   const showTodoForm = () => {
     setTodoForm(true)
   }
@@ -30,18 +31,21 @@ const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId, isShowAll
 
   return (
     <main className="content">
-      {folders.length && currentFolder
+      {folders.length
         ? <div className="content-folder">
-          {isShowAllFolders
+          {isShowAllFolders || currentFolderId === null
             ? folders.map(folder => {
               if (folder.todos.length === 0) return null
-              return <ContentFolder todos={folder.todos} color={folder.color} title={folder.title} folderId={folder.id}/>
+              return <ContentFolder todos={folder.todos} color={folder.color} title={folder.title} folderId={folder.id} />
             })
-
             : <>
-              <ContentFolder todos={currentFolder.todos} color={currentFolder.color} title={currentFolder.title} folderId={currentFolder.id}/>
-              {todoForm
-                ? <AddTodoForm hideTodoForm={hideTodoForm} addTodo={addTodo} />
+              <ContentFolder todos={folders[folderId].todos}
+                color={folders[folderId].color}
+                title={folders[folderId].title}
+                folderId={folders[folderId].id} />
+
+              {todoForm // && currentFolderId !== null
+                ? <AddTodoForm hideTodoForm={hideTodoForm} addTodo={addTodo} folderId={currentFolderId} />
                 : <button className="btn content-folder__add-btn" onClick={showTodoForm}><i>+</i>Новая задача</button>
               }
             </>
