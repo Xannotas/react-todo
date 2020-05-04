@@ -1,24 +1,26 @@
 import React from 'react'
 import classNames from 'classnames'
 
-interface ITodoFolderProps {
+type Props = {
   title: string,
   color: string,
   id: number,
-  folderId: number,
-  setFolderId: any
+  currentFolderId: number,
+  setFolderId: (id: number) => void
 }
 
-export default function TodoFolder({title, color, id, folderId, setFolderId} : ITodoFolderProps) {
-  const handleFolderClick = (event : React.MouseEvent) => {
+const TodoFolder:React.FC<Props> = ({ title, color, id, currentFolderId, setFolderId }) => {
+  const handleFolderClick = () => {
     setFolderId(id)
   }
-  
+
   return (
-    <div className={classNames('sidebar-content__item', {'active' : folderId === id})}
+    <div className={classNames('sidebar-content__item', { 'active': currentFolderId === id })}
       onClick={handleFolderClick}>
       <i className={classNames('sidebar-content__item-color', `color-${color}`)}></i>
       <span className='sidebar-content__item-title'>{title}</span>
     </div>
   )
 }
+
+export default TodoFolder

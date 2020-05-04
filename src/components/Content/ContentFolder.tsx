@@ -1,24 +1,21 @@
 import React from 'react'
-import classNames from 'classnames'
 
-import {Todo} from '../../types'
+import { Todo } from '../../types'
 
 import TodoItem from './TodoItem'
 
-interface IContentFolderProps {
-  title: string,
-  todos: Todo[],
-  color: string
+type Props = {
+  todos: Todo[]
 }
 
-export default function ContentFolder({title, todos, color} : IContentFolderProps){
+const ContentFolder: React.FC<Props> = ({ todos }) => {
   return (
     <div className="content-folder">
-      <h3 className={classNames('content-folder__title', `color-${color}`)}>{title}</h3>
-
       {todos.length > 0 && <div className="content-folder__todos">
-        {todos.map(todo => <TodoItem key={todo.id} todo={todo}/>)}
+        {todos.map(todo => <TodoItem key={todo.id} text={todo.text} id={todo.id} complited={todo.complited} />)}
       </div>}
     </div>
   )
 }
+
+export default ContentFolder

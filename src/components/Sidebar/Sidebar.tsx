@@ -1,38 +1,53 @@
-import React, {useState} from 'react';
-import { ITodoFolder } from '../../interfaces';
+import React, { useState } from 'react';
+import { Folder } from '../../types';
 
 import AddFolderForm from './AddFolderForm';
-import TodoFolder from '../TodoFolder';
+import TodoFolder from './TodoFolder';
+import { connect } from 'react-redux';
+import { RootState, setFolderId } from '../../redux/store';
 
-interface ISidebarProps {
-  addNewFolder: any,
-  setFolderId: any,
-  folders: ITodoFolder[],
-  folderId: number
+type StateProps = {
+  folders: Folder[],
+  currentFolderId: number
 }
+type DispatchProps = {
+  setFolderId: (id: number) => void
+}
+type OwnProps = {}
 
-export default function Sidebar({addNewFolder, setFolderId, folders, folderId} : ISidebarProps) {
+type Props = OwnProps & StateProps & DispatchProps
+
+const Sidebar: React.FC<Props> = ({ setFolderId, folders, currentFolderId }) => {
   const [formDisplay, toggleFormDisplay] = useState<boolean>(false)
 
-  const handleFolderShow = () => {
+  const showFormFolderCreactor = () => {
     toggleFormDisplay(true)
   }
 
-  const handleFolderHide = () => {
+  const hideFormFolderCreactor = () => {
     toggleFormDisplay(false)
   }
 
   return (
     <aside className="sidebar">
       <div className="sidebar-content">
-        {folders.map(folder => <TodoFolder  key={folder.id} title={folder.title} color={folder.color} 
-                                  id={folder.id} setFolderId={setFolderId} folderId={folderId}/>)}
+        {folders.map(folder => <TodoFolder key={folder.id} title={folder.title} color={folder.color}
+          id={folder.id} setFolderId={setFolderId} currentFolderId={currentFolderId} />)}
       </div>
-      
+
       <div className="sidebar__create-folder mt1">
-        <button className='btn sidebar__create-folder-btn' onClick={handleFolderShow}><i>+</i> Добавить Папку</button>
-        {formDisplay && <AddFolderForm closeFolderForm={handleFolderHide} addNewFolder={addNewFolder}/>}
+        <button className='btn sidebar__create-folder-btn' onClick={showFormFolderCreactor}><i>+</i> Добавить Папку</button>
+        {formDisplay && <AddFolderForm hideFormFolderCreactor={hideFormFolderCreactor} />}
       </div>
     </aside>
   )
 }
+
+const mapState = (state: StateProps) => {
+  return {
+    folders: state.folders,
+    currentFolderId: state.currentFolderId
+  }
+}
+
+export default connect<StateProps, DispatchProps, OwnProps, RootState>(mapState, { setFolderId })(Sidebar)
