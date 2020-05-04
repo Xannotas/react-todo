@@ -3,23 +3,24 @@ import { connect } from 'react-redux'
 import { RootState, compliteTodo, deleleTodo } from '../../redux/store'
 
 type OwnProps = {
-  id: number,
+  todoId: number,
+  folderId: number,
   text: string,
   complited: boolean
 }
 type StateProps = {}
 type DispathProps = {
-  compliteTodo: (id: number) => void,
+  compliteTodo: (folderId: number, todoId: number) => void,
   deleleTodo: (id: number) => void
 }
 type Props = OwnProps & DispathProps & StateProps
-const TodoItem: React.FC<Props> = ({ id, complited, text, compliteTodo, deleleTodo }) => {
+const TodoItem: React.FC<Props> = ({ folderId, todoId, complited, text, compliteTodo, deleleTodo }) => {
   const handleChangeCompleted = () => {
-    compliteTodo(id)
+    compliteTodo(folderId, todoId)
   }
 
   const handleTodoDelete = () => {
-    deleleTodo(id)
+    deleleTodo(todoId)
   }
 
   return (

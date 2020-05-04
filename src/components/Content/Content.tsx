@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import classNames from 'classnames'
 import { connect } from 'react-redux'
 import { Folder } from '../../types'
 
@@ -11,15 +10,16 @@ type OwnProps = {}
 type StateProps = {
   folders: Folder[]
   currentFolderId: number
+  isShowAllFolders: boolean
 }
 type DispatchProps = {
   addTodo: (text: string) => void
 }
 type Props = OwnProps & StateProps & DispatchProps
 
-const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId}) => {
+const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId, isShowAllFolders }) => {
   const [todoForm, setTodoForm] = useState<boolean>(false)
-  const currentFolder = currentFolderId && folders[currentFolderId]
+  const currentFolder = currentFolderId >= 0 && folders[currentFolderId]
   const showTodoForm = () => {
     setTodoForm(true)
   }
@@ -30,16 +30,21 @@ const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId}) => {
 
   return (
     <main className="content">
-      { currentFolder
+      {folders.length && currentFolder
         ? <div className="content-folder">
-          <h3 className={classNames('content-folder__title', `color-${currentFolder.color}`)}>{currentFolder.title}</h3>
-          <ContentFolder todos={currentFolder.todos}/>
-          {todoForm
-            ? <AddTodoForm
-              hideTodoForm={hideTodoForm}
-              addTodo={addTodo}
-            />
-            : <button className="btn content-folder__add-btn" onClick={showTodoForm}><i>+</i>Новая задача</button>
+          {isShowAllFolders
+            ? folders.map(folder => {
+              if (folder.todos.length === 0) return null
+              return <ContentFolder todos={folder.todos} color={folder.color} title={folder.title} folderId={folder.id}/>
+            })
+
+            : <>
+              <ContentFolder todos={currentFolder.todos} color={currentFolder.color} title={currentFolder.title} folderId={currentFolder.id}/>
+              {todoForm
+                ? <AddTodoForm hideTodoForm={hideTodoForm} addTodo={addTodo} />
+                : <button className="btn content-folder__add-btn" onClick={showTodoForm}><i>+</i>Новая задача</button>
+              }
+            </>
           }
         </div>
         : <p className='content__empty'>Задачи отсутствуют</p>
@@ -50,7 +55,8 @@ const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId}) => {
 const mapState = (state: StateProps) => {
   return {
     folders: state.folders,
-    currentFolderId: state.currentFolderId
+    currentFolderId: state.currentFolderId,
+    isShowAllFolders: state.isShowAllFolders
   }
 }
 

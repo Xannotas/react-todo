@@ -2,17 +2,16 @@ import React from 'react'
 import classNames from 'classnames'
 
 type Props = {
+  id: number,
   title: string,
   color: string,
-  id: number,
+  isShowAllFolders: boolean,
   currentFolderId: number,
   setFolderId: (id: number) => void,
   deleteFolder: (id: number) => void
 }
 
-
-
-const TodoFolder: React.FC<Props> = ({ title, color, id, currentFolderId, setFolderId, deleteFolder }) => {
+const TodoFolder: React.FC<Props> = ({ title, color, id, currentFolderId, setFolderId, deleteFolder, isShowAllFolders }) => {
   const handleFolderClick = () => {
     if (id !== currentFolderId) setFolderId(id)
   }
@@ -23,7 +22,7 @@ const TodoFolder: React.FC<Props> = ({ title, color, id, currentFolderId, setFol
 
   return (
     <div className={'sidebar-content__item-wrapper'}>
-      <div className={classNames('sidebar-content__item', { 'active': currentFolderId === id })} onClick={handleFolderClick}>
+      <div className={classNames('sidebar-content__item', { 'active': currentFolderId === id && !isShowAllFolders})} onClick={handleFolderClick}>
         <i className={classNames('sidebar-content__item-color', `color-${color}`)}></i>
         <span className='sidebar-content__item-title'>{title}</span>
       </div>
