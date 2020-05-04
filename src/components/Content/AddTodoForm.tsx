@@ -9,10 +9,19 @@ const AddTodoForm: React.FC<Props> = ({ hideTodoForm, addTodo, folderId }) => {
 
   const [todoValue, setTodoValue] = useState<string>('')
 
-  const handleAddNewTodo = () => {
+  const аddNewTodo = () => {
     if (todoValue.length) {
       addTodo(folderId, todoValue)
       setTodoValue('')
+    }
+  }
+
+  const onSubmit = () => {
+    аddNewTodo()
+  }
+  const onEnterDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      аddNewTodo()
     }
   }
 
@@ -22,8 +31,8 @@ const AddTodoForm: React.FC<Props> = ({ hideTodoForm, addTodo, folderId }) => {
 
   return (
     <div className='content-todo-form'>
-      <input className='input' value={todoValue} autoFocus onChange={onValueChange} placeholder='Текст задачи' />
-      <button className='btn btn-submit' onClick={handleAddNewTodo}>Добавить Задачу</button>
+      <input className='input' placeholder='Текст задачи' value={todoValue} autoFocus onChange={onValueChange} onKeyDown={onEnterDown} />
+      <button className='btn btn-submit' onClick={onSubmit}>Добавить Задачу</button>
       <button className='btn btn-cancel' onClick={hideTodoForm}>Отменить</button>
     </div>
   )
