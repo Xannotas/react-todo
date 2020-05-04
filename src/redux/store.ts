@@ -1,8 +1,9 @@
 import { createStore } from 'redux'
 import { Folder, Todo } from './../types';
 
-const ADD_FOLDER = 'FOLDER:ADD'
+const FOLDER_ADD = 'FOLDER:ADD'
 const SET_FOLDER_ID = 'FOLDER:SET-ID'
+const FOLDER_DELETE = 'FODLER:DELETE'
 const TODO_ADD = 'TODO:ADD'
 const TODO_COMPLITE = 'TODO:COMPLITE'
 const TODO_DELETE = 'TODO:DELETE'
@@ -14,7 +15,7 @@ const initialState = {
 type InitialState = typeof initialState
 const rootReducer = (state = initialState, action: RootAction): InitialState => {
   switch (action.type) {
-    case ADD_FOLDER: {
+    case FOLDER_ADD: {
       const foldersLenght = state.folders.length
       const newFolder: Folder = {
         id: foldersLenght ? state.folders[foldersLenght - 1].id + 1 : 0,
@@ -60,6 +61,14 @@ const rootReducer = (state = initialState, action: RootAction): InitialState => 
       return newState
     }
 
+    case FOLDER_DELETE: {
+      return {
+        ...state,
+        folders: state.folders.filter(folder => folder.id !== state.folders[action.id].id),
+        currentFolderId: state.folders[state.currentFolderId-1].id
+      }
+    }
+
     default:
       return state;
   }
@@ -74,16 +83,16 @@ export type RootState = ReturnType<typeof rootReducer>
 export default store
 
 // ACTIONS
-export type RootAction = AddFolder | AddTodo | SetFolderId | CompliteTodo | DeleleTodo
+export type RootAction = AddFolder | AddTodo | SetFolderId | CompliteTodo | DeleleTodo | DeleteFolder
 
 export type AddFolder = {
-  type: typeof ADD_FOLDER,
+  type: typeof FOLDER_ADD,
   title: string,
   colorName: string
 }
 export const addFolder = (title: string, colorName: string = 'default'): AddFolder => {
   return {
-    type: ADD_FOLDER,
+    type: FOLDER_ADD,
     title,
     colorName
   }
@@ -128,6 +137,17 @@ export type DeleleTodo = {
 export const deleleTodo = (id: number): DeleleTodo => {
   return {
     type: TODO_DELETE,
+    id
+  }
+}
+
+export type DeleteFolder = {
+  type: typeof FOLDER_DELETE,
+  id: number
+}
+export const deleteFolder = (id: number): DeleteFolder => {
+  return {
+    type: FOLDER_DELETE,
     id
   }
 }

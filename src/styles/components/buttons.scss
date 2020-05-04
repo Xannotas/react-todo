@@ -35,4 +35,14 @@
       background: darken(#F4F6F8, 20);
     }
   }
+
+  &-remove{
+    color: $text-light;
+    font-size: 1.3rem;
+    line-height: 1rem;
+
+    &:hover {
+      color: #8a0000;
+    }
+  }
 }

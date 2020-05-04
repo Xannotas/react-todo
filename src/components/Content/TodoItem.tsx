@@ -46,7 +46,7 @@ const TodoItem: React.FC<Props> = ({ id, complited, text, compliteTodo, deleleTo
         <span className='todo-item-content__text'>{text}</span>
       </label>
 
-      <span className='todo-item__remove' onClick={handleTodoDelete}>&times;</span>
+      <button className='btn btn-remove' onClick={handleTodoDelete}>&times;</button>
     </div>
   )
 }

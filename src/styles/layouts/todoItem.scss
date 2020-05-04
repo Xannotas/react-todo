@@ -47,15 +47,4 @@
       }
     }
   }
-
-  &__remove {
-    color: $text-light;
-    font-size: 1.5rem;
-    padding: 5px;
-    cursor: pointer;
-
-    &:hover {
-      color: #8a0000;
-    }
-  }
 }

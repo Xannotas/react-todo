@@ -6,19 +6,28 @@ type Props = {
   color: string,
   id: number,
   currentFolderId: number,
-  setFolderId: (id: number) => void
+  setFolderId: (id: number) => void,
+  deleteFolder: (id: number) => void
 }
 
-const TodoFolder:React.FC<Props> = ({ title, color, id, currentFolderId, setFolderId }) => {
+
+
+const TodoFolder: React.FC<Props> = ({ title, color, id, currentFolderId, setFolderId, deleteFolder }) => {
   const handleFolderClick = () => {
-    setFolderId(id)
+    if (id !== currentFolderId) setFolderId(id)
+  }
+
+  const handlerFolderRemove = () => {
+    deleteFolder(id)
   }
 
   return (
-    <div className={classNames('sidebar-content__item', { 'active': currentFolderId === id })}
-      onClick={handleFolderClick}>
-      <i className={classNames('sidebar-content__item-color', `color-${color}`)}></i>
-      <span className='sidebar-content__item-title'>{title}</span>
+    <div className={'sidebar-content__item-wrapper'}>
+      <div className={classNames('sidebar-content__item', { 'active': currentFolderId === id })} onClick={handleFolderClick}>
+        <i className={classNames('sidebar-content__item-color', `color-${color}`)}></i>
+        <span className='sidebar-content__item-title'>{title}</span>
+      </div>
+      <button className='btn btn-remove d-none' onClick={handlerFolderRemove}>&times;</button>
     </div>
   )
 }

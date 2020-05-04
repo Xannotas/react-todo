@@ -19,8 +19,7 @@ type Props = OwnProps & StateProps & DispatchProps
 
 const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId}) => {
   const [todoForm, setTodoForm] = useState<boolean>(false)
-  const currentFolder = folders[currentFolderId]
-
+  const currentFolder = currentFolderId && folders[currentFolderId]
   const showTodoForm = () => {
     setTodoForm(true)
   }
@@ -31,7 +30,7 @@ const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId}) => {
 
   return (
     <main className="content">
-      {folders.length
+      { currentFolder
         ? <div className="content-folder">
           <h3 className={classNames('content-folder__title', `color-${currentFolder.color}`)}>{currentFolder.title}</h3>
           <ContentFolder todos={currentFolder.todos}/>
