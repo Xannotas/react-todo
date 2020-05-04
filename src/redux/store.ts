@@ -3,8 +3,9 @@ import { Folder, Todo } from './../types';
 
 const ADD_FOLDER = 'FOLDER:ADD'
 const SET_FOLDER_ID = 'FOLDER:SET-ID'
-const ADD_TODO = 'TODO:ADD'
+const TODO_ADD = 'TODO:ADD'
 const TODO_COMPLITE = 'TODO:COMPLITE'
+const TODO_DELETE = 'TODO:DELETE'
 
 const initialState = {
   folders: [] as Folder[],
@@ -27,7 +28,7 @@ const rootReducer = (state = initialState, action: RootAction): InitialState => 
       }
     }
 
-    case ADD_TODO: {
+    case TODO_ADD: {
       let newTodo: Todo = {
         id: state.folders[state.currentFolderId].todos.length,
         text: action.text,
@@ -51,6 +52,14 @@ const rootReducer = (state = initialState, action: RootAction): InitialState => 
       return stateCopy
     }
 
+    case TODO_DELETE: {
+      const newState = {...state, folders: [...state.folders]}
+      const todos : Todo[] = state.folders[state.currentFolderId].todos.filter(todo => todo.id !== action.id)
+      newState.folders[state.currentFolderId].todos = todos
+
+      return newState
+    }
+
     default:
       return state;
   }
@@ -65,7 +74,7 @@ export type RootState = ReturnType<typeof rootReducer>
 export default store
 
 // ACTIONS
-export type RootAction = AddFolder | AddTodo | SetFolderId | CompliteTodo
+export type RootAction = AddFolder | AddTodo | SetFolderId | CompliteTodo | DeleleTodo
 
 export type AddFolder = {
   type: typeof ADD_FOLDER,
@@ -91,15 +100,16 @@ export const setFolderId = (id: number): SetFolderId => {
 }
 
 export type AddTodo = {
-  type: typeof ADD_TODO,
+  type: typeof TODO_ADD,
   text: string
 }
 export const addTodo = (text: string): AddTodo => {
   return {
-    type: ADD_TODO,
+    type: TODO_ADD,
     text
   }
 }
+
 export type CompliteTodo = {
   type: typeof TODO_COMPLITE,
   id: number
@@ -107,6 +117,17 @@ export type CompliteTodo = {
 export const compliteTodo = (id: number): CompliteTodo => {
   return {
     type: TODO_COMPLITE,
+    id
+  }
+}
+
+export type DeleleTodo = {
+  type: typeof TODO_DELETE,
+  id: number
+}
+export const deleleTodo = (id: number): DeleleTodo => {
+  return {
+    type: TODO_DELETE,
     id
   }
 }

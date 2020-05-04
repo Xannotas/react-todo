@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { RootState, compliteTodo } from '../../redux/store'
+import { RootState, compliteTodo, deleleTodo } from '../../redux/store'
 
 type OwnProps = {
   id: number,
@@ -9,18 +9,23 @@ type OwnProps = {
 }
 type StateProps = {}
 type DispathProps = {
-  compliteTodo: (id: number) => void
+  compliteTodo: (id: number) => void,
+  deleleTodo: (id: number) => void
 }
 type Props = OwnProps & DispathProps & StateProps
-const TodoItem: React.FC<Props> = ({ id, complited, text, compliteTodo }) => {
-  const handleChangeChecked = () => {
+const TodoItem: React.FC<Props> = ({ id, complited, text, compliteTodo, deleleTodo }) => {
+  const handleChangeCompleted = () => {
     compliteTodo(id)
+  }
+
+  const handleTodoDelete = () => {
+    deleleTodo(id)
   }
 
   return (
     <div className='todo-item'>
       <label className='todo-item-content'>
-        <input type="checkbox" checked={complited} onChange={handleChangeChecked} />
+        <input type="checkbox" checked={complited} onChange={handleChangeCompleted} />
         <span className="checkbox">
           <svg
             width="11"
@@ -41,9 +46,9 @@ const TodoItem: React.FC<Props> = ({ id, complited, text, compliteTodo }) => {
         <span className='todo-item-content__text'>{text}</span>
       </label>
 
-      <span className='todo-item__remove'>&times;</span>
+      <span className='todo-item__remove' onClick={handleTodoDelete}>&times;</span>
     </div>
   )
 }
 
-export default connect<StateProps, DispathProps, OwnProps, RootState>(null, { compliteTodo })(TodoItem)
+export default connect<StateProps, DispathProps, OwnProps, RootState>(null, { compliteTodo, deleleTodo })(TodoItem)
