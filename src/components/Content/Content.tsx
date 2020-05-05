@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
 import { Folder } from '../../types'
+import { findFolderIdOfState } from '../../utils/helpers'
 import { RootState } from '../../redux/store'
 import { addTodo, setFolderTitle } from '../../redux/actions'
 
@@ -22,7 +23,7 @@ type Props = OwnProps & StateProps & DispatchProps
 
 const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId, isShowAllFolders, setFolderTitle }) => {
   const [todoForm, setTodoForm] = useState<boolean>(false)
-  const folderId: number = folders.indexOf(folders.find(folder => folder.id === currentFolderId) as Folder)
+  const folderId: number = findFolderIdOfState(folders, currentFolderId!)
 
   const showTodoForm = () => {
     setTodoForm(true)

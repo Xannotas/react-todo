@@ -18,7 +18,7 @@ const ContentFolder: React.FC<Props> = ({ todos, title, color, folderId, setFold
   const [titleFormIsOpen, setTitleFormIsOpen] = useState<boolean>(false)
   const [titleValue, setTitleValue] = useState<string>(title)
 
-  const classColor: string = classNames('content-folder__title', `color-${color}`)
+  const classTitle: string = classNames('content-folder__title', `color-${color}`)
 
   useEffect(() => {
     setTitleValue(title)
@@ -26,7 +26,7 @@ const ContentFolder: React.FC<Props> = ({ todos, title, color, folderId, setFold
 
   const handleChangeTitle = () => {
     setTitleFormIsOpen(false)
-    if (titleValue !== title) {
+    if (titleValue !== title && titleValue.length <= maxLenght) {
       const newTitle = titleValue === '' ? 'Без названия' : titleValue
       setFolderTitle(folderId, newTitle)
     }
@@ -42,9 +42,9 @@ const ContentFolder: React.FC<Props> = ({ todos, title, color, folderId, setFold
   return (
     <div className="content-folder">
       {titleFormIsOpen
-        ? <Input onBlur={handleChangeTitle} placeholder='Название папки' onSubmit={handleChangeTitle} value={titleValue} setValue={setTitleValue} />
+        ? <Input className={classTitle} onBlur={handleChangeTitle} placeholder='Название папки' onSubmit={handleChangeTitle} value={titleValue} setValue={setTitleValue} />
 
-        : <h3 onClick={onTitleClick} className={classColor}>
+        : <h3 onClick={onTitleClick} className={classTitle}>
           <span>{title}</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"

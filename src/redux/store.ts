@@ -4,6 +4,7 @@ import {
   RootAction, TODO_ADD, FOLDER_ADD, SET_FOLDER_ID, TODO_COMPLITE,
   TODO_DELETE, FOLDER_DELETE, SHOW_ALL_FOLDERS, SET_FOLDER_TITLE
 } from './actions';
+import { findFolderIdOfState } from '../utils/helpers';
 
 const initialState = {
   folders: [] as Folder[],
@@ -51,7 +52,8 @@ const rootReducer = (state = initialState, action: RootAction): InitialState => 
 
     case TODO_COMPLITE: {
       const stateCopy = { ...state, folders: [...state.folders] }
-      stateCopy.folders[action.folderId].todos.map(todo => todo.id === action.todoId ? todo.complited = !todo.complited : todo)
+      const folderId = findFolderIdOfState(state.folders, action.folderId)
+      stateCopy.folders[folderId].todos.map(todo => todo.id === action.todoId ? todo.complited = !todo.complited : todo)
       return stateCopy
     }
 
@@ -68,8 +70,8 @@ const rootReducer = (state = initialState, action: RootAction): InitialState => 
       if (state.folders.length < 2) {
         newId = null
       } else {
-        const actionId = state.folders.indexOf(state.folders.find(folder => folder.id === action.folderId) as Folder)
-        newId = state.folders[actionId - 1] ? state.folders[actionId - 1].id : 0
+        const folderId = findFolderIdOfState(state.folders, action.folderId)
+        newId = state.folders[folderId - 1] ? state.folders[folderId - 1].id : 0
       }
       return {
         ...state,
