@@ -20,6 +20,7 @@
 
       &-all-todos {
         margin-bottom: 30px;
+        border-radius: 5px !important;
         i {
           margin-right: 5px;
           vertical-align: middle;
@@ -43,11 +44,12 @@
       &+.btn-remove {
         padding: 10px;
         background: #fff;
+        border-radius: 0 5px 5px 0;
       }
 
       &.active {
         background: #fff;
-        border-radius: 5px;
+        border-radius: 5px 0 0 5px;
         cursor: auto;
 
         & + .btn {

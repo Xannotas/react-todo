@@ -13,7 +13,7 @@ const initialState = {
 export type InitialState = typeof initialState
 
 const persistedState: InitialState = {
-  folders: JSON.parse(localStorage.getItem('folders') || ''),
+  folders: localStorage.getItem('folders') ? JSON.parse(localStorage.getItem('folders')!) : [],
   currentFolderId: localStorage.getItem('currentFolderId') !== '' ? Number(localStorage.getItem('currentFolderId')) : null,
   isShowAllFolders: localStorage.getItem('isShowAllFolders') === 'true' ? true : false
 }

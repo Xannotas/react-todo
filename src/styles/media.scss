@@ -1,0 +1,111 @@
+@media (max-width: 750px) {
+  .app {
+    margin-top: 30px;
+    min-height: 0;
+    width: 90%;
+    flex-direction: column;
+  }
+  .sidebar {
+    display: block;
+    max-width: 100%;
+    left: 0;
+    transition: all 1s;
+
+    &-content {
+      margin-bottom: 20px;
+      &__item {
+        padding: 15px;
+
+        &-all-todos {
+          margin-bottom: 15px;
+        }
+
+        &.active {
+          & + .btn-remove {
+            padding: 10px 15px;
+          }
+        }
+      }
+    }
+
+    &__create-folder-form {
+      width: 350px;
+      padding: 30px;
+
+      input {
+        font-size: 1.2rem;
+      }
+
+      .btn-close {
+        width: 30px;
+        height: 30px;
+        font-size: 1.5rem;
+        top: -13px;
+        right: -13px;
+      }
+      .btn-submit {
+        margin-top: 20px;
+      }
+    }
+
+    &-colors {
+      margin-top: 20px !important;
+      &__item {
+        width: 27px !important;
+        height: 27px !important;
+      }
+    }
+  }
+
+  .btn {
+    &-remove {
+      font-size: 25px;
+      line-height: 26px;
+    }
+  }
+  .content {
+    margin: 0 auto;
+    padding: 20px;
+
+    &-folder {
+      &__todos {
+        .todo-item + .todo-item {
+          margin-top: 8px;
+        }
+      }
+    }
+  }
+
+  .hr {
+    margin: 15px 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .app {
+    margin-top: 0;
+    width: 100%;
+  }
+
+  .sidebar {
+    &__create-folder-form {
+      width: 300px;
+      padding: 20px;
+
+      input {
+        font-size: 1rem;
+      }
+
+      .btn-close {
+        width: 30px;
+        height: 30px;
+        font-size: 1.5rem;
+        top: -13px;
+        right: -13px;
+      }
+      .btn-submit {
+        margin-top: 20px;
+      }
+    }
+  }
+}
