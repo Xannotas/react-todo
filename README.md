@@ -4,5 +4,3 @@
   + ReactJS
   + Redux
   + Typescript
-  
-### Превью: 
