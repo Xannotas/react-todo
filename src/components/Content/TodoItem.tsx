@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { RootState, compliteTodo, deleleTodo } from '../../redux/store'
+
+import { RootState } from '../../redux/store'
+import { compliteTodo, deleleTodo } from '../../redux/actions'
 
 type OwnProps = {
   todoId: number,

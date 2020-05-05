@@ -8,7 +8,7 @@ body {
 }
 
 input {
-  box-sizing: border-box;;
+  box-sizing: border-box;
 }
 
 ul {
@@ -28,4 +28,9 @@ ul {
 }
 .d-none {
   display: none;
+}
+
+.hr {
+  border-bottom: 1px solid #f2f2f2;
+  margin: 30px 0;
 }

@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { RootState, addFolder } from './../../redux/store'
+import { RootState } from './../../redux/store'
+import { addFolder } from './../../redux/actions'
 
 import colorList from './../../assets/colorList.json'
 

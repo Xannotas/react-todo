@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Folder } from '../../types';
+import { connect } from 'react-redux';
 import classNames from 'classnames'
-import listSvg from '../../assets/icons/list.svg';
 
+import { Folder } from '../../types';
+import { RootState } from '../../redux/store';
+import { setFolderId, deleteFolder, showAllFolders } from '../../redux/actions';
+
+import listSvg from '../../assets/icons/list.svg';
 import AddFolderForm from './AddFolderForm';
 import TodoFolder from './TodoFolder';
-import { connect } from 'react-redux';
-import { RootState, setFolderId, deleteFolder, showAllFolders } from '../../redux/store';
 
 type StateProps = {
   folders: Folder[],

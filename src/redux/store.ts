@@ -1,15 +1,9 @@
 import { createStore } from 'redux'
 import { Folder, Todo } from './../types';
-
-const FOLDER_ADD = 'FOLDER:ADD'
-const SET_FOLDER_ID = 'FOLDER:SET-ID'
-const FOLDER_DELETE = 'FODLER:DELETE'
-
-const TODO_ADD = 'TODO:ADD'
-const TODO_COMPLITE = 'TODO:COMPLITE'
-const TODO_DELETE = 'TODO:DELETE'
-
-const SHOW_ALL_FOLDERS = 'SHOW-ALL-FOLDERS:ON'
+import {
+  RootAction, TODO_ADD, FOLDER_ADD, SET_FOLDER_ID, TODO_COMPLITE,
+  TODO_DELETE, FOLDER_DELETE, SHOW_ALL_FOLDERS, SET_FOLDER_TITLE
+} from './actions';
 
 const initialState = {
   folders: [] as Folder[],
@@ -93,6 +87,13 @@ const rootReducer = (state = initialState, action: RootAction): InitialState => 
       }
     }
 
+    case SET_FOLDER_TITLE: {
+      return {
+        ...state,
+        folders: state.folders.map(folder => folder.id === action.folderId ? {...folder, title: action.folderTitle} : folder)
+      }
+    }
+
     default:
       return state;
   }
@@ -108,63 +109,3 @@ window._state = store.getState()
 
 export type RootState = ReturnType<typeof rootReducer>
 export default store
-
-// ACTIONS
-export type RootAction = AddFolder | AddTodo | SetFolderId |
-  CompliteTodo | DeleleTodo | DeleteFolder | ShowAllFolders
-
-type AddFolder = { type: typeof FOLDER_ADD, title: string, colorName: string }
-export const addFolder = (title: string, colorName: string = 'default'): AddFolder => {
-  return {
-    type: FOLDER_ADD,
-    title,
-    colorName
-  }
-}
-type SetFolderId = { type: typeof SET_FOLDER_ID, id: number }
-export const setFolderId = (id: number): SetFolderId => {
-  return {
-    type: SET_FOLDER_ID,
-    id
-  }
-}
-
-type AddTodo = { type: typeof TODO_ADD, folderId: number, text: string }
-export const addTodo = (folderId: number, text: string): AddTodo => {
-  return {
-    type: TODO_ADD,
-    folderId,
-    text
-  }
-}
-
-type CompliteTodo = { type: typeof TODO_COMPLITE, folderId: number, todoId: number }
-export const compliteTodo = (folderId: number, todoId: number): CompliteTodo => {
-  return {
-    type: TODO_COMPLITE,
-    folderId,
-    todoId
-  }
-}
-
-type DeleleTodo = { type: typeof TODO_DELETE, folderId: number, todoId: number }
-export const deleleTodo = (folderId: number, todoId: number): DeleleTodo => {
-  return {
-    type: TODO_DELETE,
-    folderId,
-    todoId
-  }
-}
-
-type DeleteFolder = { type: typeof FOLDER_DELETE, folderId: number }
-export const deleteFolder = (folderId: number): DeleteFolder => {
-  return {
-    type: FOLDER_DELETE,
-    folderId
-  }
-}
-
-type ShowAllFolders = { type: typeof SHOW_ALL_FOLDERS }
-export const showAllFolders = (): ShowAllFolders => {
-  return { type: SHOW_ALL_FOLDERS }
-}

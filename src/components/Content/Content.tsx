@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { Folder } from '../../types'
 
-import { RootState, addTodo } from '../../redux/store'
+import { Folder } from '../../types'
+import { RootState } from '../../redux/store'
+import { addTodo, setFolderTitle } from '../../redux/actions'
+
 import ContentFolder from './ContentFolder'
 import AddTodoForm from './AddTodoForm'
 
@@ -14,10 +16,11 @@ type StateProps = {
 }
 type DispatchProps = {
   addTodo: (folderId: number, text: string) => void
+  setFolderTitle: (folderId: number, folderTitle: string) => void
 }
 type Props = OwnProps & StateProps & DispatchProps
 
-const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId, isShowAllFolders }) => {
+const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId, isShowAllFolders, setFolderTitle }) => {
   const [todoForm, setTodoForm] = useState<boolean>(false)
   const folderId: number = folders.indexOf(folders.find(folder => folder.id === currentFolderId) as Folder)
 
@@ -36,13 +39,19 @@ const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId, isShowAll
           {isShowAllFolders || folderId < 0
             ? folders.map(folder => {
               if (folder.todos.length === 0) return null
-              return <ContentFolder todos={folder.todos} color={folder.color} title={folder.title} folderId={folder.id} />
+              return <ContentFolder key={folder.id}
+                todos={folder.todos}
+                color={folder.color}
+                title={folder.title}
+                folderId={folder.id}
+                setFolderTitle={setFolderTitle} />
             })
             : <>
               <ContentFolder todos={folders[folderId].todos}
                 color={folders[folderId].color}
                 title={folders[folderId].title}
-                folderId={folders[folderId].id} />
+                folderId={folders[folderId].id}
+                setFolderTitle={setFolderTitle} />
 
               {todoForm
                 ? <AddTodoForm hideTodoForm={hideTodoForm} addTodo={addTodo} folderId={folderId} />
@@ -64,4 +73,4 @@ const mapState = (state: StateProps) => {
   }
 }
 
-export default connect<StateProps, DispatchProps, OwnProps, RootState>(mapState, { addTodo })(Content)
+export default connect<StateProps, DispatchProps, OwnProps, RootState>(mapState, { addTodo, setFolderTitle })(Content)
