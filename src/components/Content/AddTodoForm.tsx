@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import Input from '../common/Input'
 
 type Props = {
   folderId: number,
@@ -6,33 +7,20 @@ type Props = {
   addTodo: (folderId: number, text: string) => void
 }
 const AddTodoForm: React.FC<Props> = ({ hideTodoForm, addTodo, folderId }) => {
-
+  const maxTodoLenght = 50
   const [todoValue, setTodoValue] = useState<string>('')
 
-  const аddNewTodo = () => {
-    if (todoValue.length) {
+  const handleAddTodo = () => {
+    if (todoValue.length > 0 && todoValue.length <= maxTodoLenght) {
       addTodo(folderId, todoValue)
       setTodoValue('')
     }
   }
 
-  const onSubmit = () => {
-    аddNewTodo()
-  }
-  const onEnterDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      аddNewTodo()
-    }
-  }
-
-  const onValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTodoValue(event.currentTarget.value)
-  }
-
   return (
     <div className='content-todo-form'>
-      <input className='input' placeholder='Текст задачи' value={todoValue} autoFocus onChange={onValueChange} onKeyDown={onEnterDown} />
-      <button className='btn btn-submit' onClick={onSubmit}>Добавить Задачу</button>
+      <Input placeholder='Текст задачи' onSubmit={handleAddTodo} value={todoValue} setValue={setTodoValue} maxLenght={maxTodoLenght} />
+      <button className='btn btn-submit' onClick={handleAddTodo}>Добавить Задачу</button>
       <button className='btn btn-cancel' onClick={hideTodoForm}>Отменить</button>
     </div>
   )

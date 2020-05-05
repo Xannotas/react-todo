@@ -5,10 +5,11 @@
   
   &-content {
     display: flex;
-    align-items: center;
-    cursor: pointer;
     width: 100%;
     padding: 5px 0;
+    word-break: break-all;
+    cursor: pointer;
+    align-items: center;
 
     .checkbox {
       display: inline-block;
