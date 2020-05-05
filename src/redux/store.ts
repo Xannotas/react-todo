@@ -1,6 +1,5 @@
 import { createStore } from 'redux'
 import { Folder, Todo } from './../types';
-import { stat } from 'fs';
 
 const FOLDER_ADD = 'FOLDER:ADD'
 const SET_FOLDER_ID = 'FOLDER:SET-ID'

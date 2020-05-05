@@ -1,4 +1,17 @@
 .content {
+  padding: 50px;
+  width: 100%;	
+  background: #fff;
+
+  &__empty {
+    width: 100%;
+    color: $text-light;
+    font-size: 2rem;
+    font-weight: 700;
+    align-self: center;
+    text-align: center;
+  }
+
   &-todo-form {
     input {
       padding: 10px;

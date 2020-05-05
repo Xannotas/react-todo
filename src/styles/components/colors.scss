@@ -1,6 +1,35 @@
 .color{
-  &-default{
-    color: $accent-color;
-    background: $accent-color;
+  &-default,
+  &-gray{
+    color: $color-gray;
+    background: $color-gray;
+  }
+  &-green{
+    color: $color-green;
+    background: $color-green;
+  }
+  &-blue{
+    color: $color-blue;
+    background: $color-blue;
+  }
+  &-pink{
+    color: $color-pink;
+    background: $color-pink;
+  }
+  &-light_green{
+    color: $color-light_green;
+    background: $color-light_green;
+  }
+  &-purple{
+    color: $color-purple;
+    background: $color-purple;
+  }
+  &-black{
+    color: $color-black;
+    background: $color-black;
+  }
+  &-red{
+    color: $color-red;
+    background: $color-red;
   }
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Folder } from '../../types';
 import classNames from 'classnames'
-import listSvg from '../../assets/list.svg';
+import listSvg from '../../assets/icons/list.svg';
 
 import AddFolderForm from './AddFolderForm';
 import TodoFolder from './TodoFolder';

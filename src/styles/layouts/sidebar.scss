@@ -84,6 +84,24 @@
       border-radius: 12px;
       box-shadow: 0 3px 10px 3px #ddd;
       margin-bottom: 3rem;
+
+      .sidebar-colors {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+
+        &__item {
+          display: inline-block;
+          width: 19px;
+          height: 19px;
+          border-radius: 50%;
+          border: 2px solid transparent;
+
+          &.active {
+            border: 2px solid #525252;
+          }
+        }
+      }
       
       .btn-close {
         position: absolute;
@@ -98,19 +116,5 @@
         line-height: 1rem;
       }
     }
-  }
-}
-.content {
-  padding: 50px;
-  width: 100%;	
-  background: #fff;
-
-  &__empty {
-    width: 100%;
-    color: $text-light;
-    font-size: 2rem;
-    font-weight: 700;
-    align-self: center;
-    text-align: center;
   }
 }
