@@ -53,8 +53,8 @@ const AddFolderForm: React.FC<Props> = ({ hideFormFolderCreactor, addFolder }) =
 
       <div className='sidebar-colors'>
         {colorList.colors.map((color, index) => {
-          return <div key={color} onClick={handleChangeColor(index)}
-            className={classNames('sidebar-colors__item', 'color-' + color, { 'active': colorId === index })}></div>
+          return <button key={color} onClick={handleChangeColor(index)}
+            className={classNames('sidebar-colors__item', 'color-' + color, { 'active': colorId === index })}></button>
         })}
       </div>
 
