@@ -75,15 +75,12 @@ const rootReducer = (state = initialState, action: RootAction): InitialState => 
       if (state.folders.length < 2) {
         newId = null
       } else {
-        if(state.folders[action.folderId - 1]) {
-          newId = state.folders[action.folderId - 1].id
-        } else {
-          newId = state.folders[action.folderId + 1].id
-        }
+        const actionId = state.folders.indexOf(state.folders.find(folder => folder.id === action.folderId) as Folder)
+        newId = state.folders[actionId - 1] ? state.folders[actionId - 1].id : 0
       }
       return {
         ...state,
-        folders: state.folders.length > 1 ? state.folders.filter(folder => folder.id !== state.folders[action.folderId].id) : [],
+        folders: state.folders.length > 1 ? state.folders.filter(folder => folder.id !== action.folderId) : [],
         currentFolderId: newId,
         isShowAllFolders: newId === null ? true : false
       }

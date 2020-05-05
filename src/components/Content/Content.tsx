@@ -20,7 +20,7 @@ type Props = OwnProps & StateProps & DispatchProps
 const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId, isShowAllFolders }) => {
   const [todoForm, setTodoForm] = useState<boolean>(false)
   const folderId: number = folders.indexOf(folders.find(folder => folder.id === currentFolderId) as Folder)
-  
+
   const showTodoForm = () => {
     setTodoForm(true)
   }
@@ -33,7 +33,7 @@ const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId, isShowAll
     <main className="content">
       {folders.length
         ? <div className="content-folder">
-          {isShowAllFolders || currentFolderId === null
+          {isShowAllFolders || folderId < 0
             ? folders.map(folder => {
               if (folder.todos.length === 0) return null
               return <ContentFolder todos={folder.todos} color={folder.color} title={folder.title} folderId={folder.id} />
@@ -44,8 +44,8 @@ const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId, isShowAll
                 title={folders[folderId].title}
                 folderId={folders[folderId].id} />
 
-              {todoForm // && currentFolderId !== null
-                ? <AddTodoForm hideTodoForm={hideTodoForm} addTodo={addTodo} folderId={currentFolderId} />
+              {todoForm
+                ? <AddTodoForm hideTodoForm={hideTodoForm} addTodo={addTodo} folderId={folderId} />
                 : <button className="btn content-folder__add-btn" onClick={showTodoForm}><i>+</i>Новая задача</button>
               }
             </>

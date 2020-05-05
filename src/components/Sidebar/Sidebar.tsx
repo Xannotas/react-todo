@@ -41,7 +41,7 @@ const Sidebar: React.FC<Props> = ({ setFolderId, folders, currentFolderId, delet
     <aside className="sidebar">
       <div className="sidebar-content">
         {folders.length > 1 &&
-          <div className={classNames('sidebar-content__item','sidebar-content__item-all-todos', {'active' : isShowAllFolders})} onClick={hideFormShowAllFolders}>
+          <div className={classNames('sidebar-content__item', 'sidebar-content__item-all-todos', { 'active': isShowAllFolders })} onClick={hideFormShowAllFolders}>
             <i className={'sidebar-content__item-img'}> <img src={listSvg} alt="list" /> </i>
             <span className='sidebar-content__item-title'>Все задачи</span>
           </div>

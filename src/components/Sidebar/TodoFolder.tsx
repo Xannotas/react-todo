@@ -22,11 +22,11 @@ const TodoFolder: React.FC<Props> = ({ title, color, id, currentFolderId, setFol
 
   return (
     <div className={'sidebar-content__item-wrapper'}>
-      <div className={classNames('sidebar-content__item', { 'active': currentFolderId === id && !isShowAllFolders})} onClick={handleFolderClick}>
+      <div className={classNames('sidebar-content__item', { 'active': currentFolderId === id && !isShowAllFolders })} onClick={handleFolderClick}>
         <i className={classNames('sidebar-content__item-color', `color-${color}`)}></i>
         <span className='sidebar-content__item-title'>{title}</span>
       </div>
-      <button className='btn btn-remove d-none' onClick={handlerFolderRemove}>&times;</button> 
+      <button className='btn btn-remove d-none' onClick={handlerFolderRemove}>&times;</button>
     </div>
   )
 }
