@@ -1,9 +1,6 @@
 import { Folder, Todo } from './../types';
 import { findFolderIdOfState } from '../utils/helpers';
-import {
-  RootAction, TODO_ADD, FOLDER_ADD, SET_FOLDER_ID, TODO_COMPLITE,
-  TODO_DELETE, FOLDER_DELETE, SHOW_ALL_FOLDERS, SET_FOLDER_TITLE
-} from './actions';
+import { Actions } from './store';
 
 const initialState = {
   folders: [] as Folder[],
@@ -18,9 +15,9 @@ const persistedState: InitialState = {
   isShowAllFolders: localStorage.getItem('isShowAllFolders') === 'true' ? true : false
 }
 
-const rootReducer = (state = persistedState, action: RootAction): InitialState => {
+const rootReducer = (state = persistedState, action: Actions): InitialState => {
   switch (action.type) {
-    case FOLDER_ADD: {
+    case 'FOLDER:ADD': {
       const foldersLenght = state.folders.length
       const newFolder: Folder = {
         id: foldersLenght ? state.folders[foldersLenght - 1].id + 1 : 0,
@@ -36,9 +33,9 @@ const rootReducer = (state = persistedState, action: RootAction): InitialState =
       }
     }
 
-    case TODO_ADD: {
+    case 'TODO:ADD': {
       let newTodo: Todo = {
-        id: state.folders[action.folderId].todos.length,
+        id: state.folders[findFolderIdOfState(state.folders, action.folderId)].todos.length,
         text: action.text,
         complited: false
       }
@@ -47,30 +44,30 @@ const rootReducer = (state = persistedState, action: RootAction): InitialState =
       return stateCopy
     }
 
-    case SET_FOLDER_ID: {
+    case 'FOLDER:SET-ID': {
       return {
         ...state,
-        currentFolderId: action.id,
+        currentFolderId: action.folderId,
         isShowAllFolders: false
       }
     }
 
-    case TODO_COMPLITE: {
+    case 'TODO:SET_COMPLITE': {
       const stateCopy = { ...state, folders: [...state.folders] }
       const folderId = findFolderIdOfState(state.folders, action.folderId)
       stateCopy.folders[folderId].todos.map(todo => todo.id === action.todoId ? todo.complited = !todo.complited : todo)
       return stateCopy
     }
 
-    case TODO_DELETE: {
+    case 'TODO:DELETE': {
       const newState = { ...state, folders: [...state.folders] }
-      const todos: Todo[] = state.folders[action.folderId].todos.filter(todo => todo.id !== action.todoId)
+      const todos: Todo[] = state.folders[findFolderIdOfState(state.folders, action.folderId)].todos.filter(todo => todo.id !== action.todoId)
       newState.folders[action.folderId].todos = todos
 
       return newState
     }
 
-    case FOLDER_DELETE: {
+    case 'FOLDER:DELETE': {
       let newId: number | null = null
       if (state.folders.length < 2) {
         newId = null
@@ -86,7 +83,7 @@ const rootReducer = (state = persistedState, action: RootAction): InitialState =
       }
     }
 
-    case SHOW_ALL_FOLDERS: {
+    case 'FOLDER:SHOW-ALL': {
       return {
         ...state,
         isShowAllFolders: true,
@@ -94,7 +91,7 @@ const rootReducer = (state = persistedState, action: RootAction): InitialState =
       }
     }
 
-    case SET_FOLDER_TITLE: {
+    case 'FOLDER:SET-TITLE': {
       return {
         ...state,
         folders: state.folders.map(folder => folder.id === action.folderId ? { ...folder, title: action.folderTitle } : folder)

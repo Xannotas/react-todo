@@ -3,8 +3,7 @@ import { connect } from 'react-redux'
 
 import { Folder } from '../../types'
 import { findFolderIdOfState } from '../../utils/helpers'
-import { RootState } from '../../redux/store'
-import { addTodo, setFolderTitle } from '../../redux/actions'
+import { RootState, actions } from '../../redux/store'
 
 import ContentFolder from './ContentFolder'
 import AddTodoForm from './AddTodoForm'
@@ -74,4 +73,4 @@ const mapState = (state: StateProps) => {
   }
 }
 
-export default connect<StateProps, DispatchProps, OwnProps, RootState>(mapState, { addTodo, setFolderTitle })(Content)
+export default connect<StateProps, DispatchProps, OwnProps, RootState>(mapState, { addTodo: actions.addTodo, setFolderTitle: actions.setFolderTitle })(Content)

@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import classNames from 'classnames'
 import { connect } from 'react-redux'
-import { RootState } from './../../redux/store'
-import { addFolder } from './../../redux/actions'
+import { RootState, actions } from './../../redux/store'
 
 import colorList from './../../assets/colorList.json'
 import Input from '../common/Input'
@@ -36,7 +35,7 @@ const AddFolderForm: React.FC<Props> = ({ hideFormFolderCreactor, addFolder }) =
   return (
     <div className='sidebar__create-folder-form'>
       <button className='btn btn-close' onClick={hideFormFolderCreactor}>&times;</button>
-      <Input value={inputValue} setValue={setInputValue} maxLenght={maxLenght} placeholder='Название папки' onSubmit={handleAddNewFolder}/>
+      <Input value={inputValue} setValue={setInputValue} maxLenght={maxLenght} placeholder='Название папки' onSubmit={handleAddNewFolder} />
 
       <div className='sidebar-colors'>
         {colorList.colors.map((color, index) => {
@@ -51,4 +50,4 @@ const AddFolderForm: React.FC<Props> = ({ hideFormFolderCreactor, addFolder }) =
 }
 
 export default connect<StateProps, DispatchProps, OwnProps, RootState>
-  (null, { addFolder })(AddFolderForm)
+  (null, { addFolder: actions.addFolder })(AddFolderForm)

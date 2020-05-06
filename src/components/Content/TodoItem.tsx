@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { RootState } from '../../redux/store'
-import { compliteTodo, deleleTodo } from '../../redux/actions'
+import { RootState, actions } from '../../redux/store'
 
 type OwnProps = {
   todoId: number,
@@ -55,4 +54,4 @@ const TodoItem: React.FC<Props> = ({ folderId, todoId, complited, text, complite
   )
 }
 
-export default connect<StateProps, DispathProps, OwnProps, RootState>(null, { compliteTodo, deleleTodo })(TodoItem)
+export default connect<StateProps, DispathProps, OwnProps, RootState>(null, { compliteTodo: actions.compliteTodo, deleleTodo: actions.deleleTodo })(TodoItem)

@@ -3,8 +3,7 @@ import { connect } from 'react-redux';
 import classNames from 'classnames'
 
 import { Folder } from '../../types';
-import { RootState } from '../../redux/store';
-import { setFolderId, deleteFolder, showAllFolders } from '../../redux/actions';
+import { RootState, actions } from '../../redux/store';
 
 import listSvg from '../../assets/icons/list.svg';
 import AddFolderForm from './AddFolderForm';
@@ -69,4 +68,9 @@ const mapState = (state: StateProps) => {
   }
 }
 
-export default connect<StateProps, DispatchProps, OwnProps, RootState>(mapState, { setFolderId, deleteFolder, showAllFolders })(Sidebar)
+export default connect<StateProps, DispatchProps, OwnProps, RootState>(mapState,
+  {
+    setFolderId: actions.setFolderId,
+    deleteFolder: actions.deleteFolder,
+    showAllFolders: actions.showAllFolders
+  })(Sidebar)
