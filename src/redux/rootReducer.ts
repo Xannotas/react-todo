@@ -69,17 +69,20 @@ const rootReducer = (state = persistedState, action: Actions): InitialState => {
 
     case 'FOLDER:DELETE': {
       let newId: number | null = null
-      if (state.folders.length < 2) {
-        newId = null
-      } else {
-        const folderId = findFolderIdOfState(state.folders, action.folderId)
-        newId = state.folders[folderId - 1] ? state.folders[folderId - 1].id : 0
+
+      if (state.folders.length > 1) {
+        const curFolderIndex = findFolderIdOfState(state.folders, action.folderId)
+        if (state.folders[curFolderIndex+1]){
+          newId = state.folders[curFolderIndex+1].id
+        } else if (state.folders[curFolderIndex-1]){
+          newId = state.folders[curFolderIndex-1].id
+        }
       }
+
       return {
         ...state,
         folders: state.folders.length > 1 ? state.folders.filter(folder => folder.id !== action.folderId) : [],
-        currentFolderId: newId,
-        isShowAllFolders: newId === null ? true : false
+        currentFolderId: newId
       }
     }
 
