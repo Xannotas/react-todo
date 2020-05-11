@@ -24,6 +24,8 @@ const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId, isShowAll
   const [todoForm, setTodoForm] = useState<boolean>(false)
   const folderId: number = findFolderIdOfState(folders, currentFolderId!)
 
+  let hasTodos = false
+
   const showTodoForm = () => {
     setTodoForm(true)
   }
@@ -37,15 +39,23 @@ const Content: React.FC<Props> = ({ addTodo, folders, currentFolderId, isShowAll
       {folders.length
         ? <div className="content-folder">
           {isShowAllFolders || folderId < 0
-            ? folders.map(folder => {
-              if (folder.todos.length === 0) return null
-              return <ContentFolder key={folder.id}
-                todos={folder.todos}
-                color={folder.color}
-                title={folder.title}
-                folderId={folder.id}
-                setFolderTitle={setFolderTitle} />
-            })
+            ? <>
+              {
+                folders.map(folder => {
+                  if (folder.todos.length === 0) return null
+                  hasTodos = true
+                  return <ContentFolder key={folder.id}
+                    todos={folder.todos}
+                    color={folder.color}
+                    title={folder.title}
+                    folderId={folder.id}
+                    setFolderTitle={setFolderTitle} />
+                })
+              }
+              {!hasTodos &&
+                <p className='content__empty'>Задачи отсутствуют</p>
+              }
+            </>
             : <>
               <ContentFolder todos={folders[folderId].todos}
                 color={folders[folderId].color}
